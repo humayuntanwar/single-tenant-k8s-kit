@@ -20,3 +20,15 @@
    so it can't be used by accident.
 
 4. Exact package versions in requirements.txt, so the build gives the same result every time.
+
+
+
+   ## Container
+
+   5. The container runs as a normal user (uid 10001), not root. If someone breaks in.
+
+   6. Two-stage build: one stage installs packages, the final image only gets the result.
+      Smaller image, fewer things to patch.
+
+   7. Images get a version tag (0.1.0), never "latest". You always know exactly
+      which build is running for each customer.
