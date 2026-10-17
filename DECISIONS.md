@@ -32,3 +32,16 @@
 
    7. Images get a version tag (0.1.0), never "latest". You always know exactly
       which build is running for each customer.
+
+
+## Local cluster
+
+8. kind for the local cluster. It runs real Kubernetes inside Docker on my laptop, for free.
+   What works here works the same on EKS, because the Kubernetes API is the same.
+
+9. Three nodes: one control plane and two workers. With two workers I can see pods spread
+   across machines, and test what happens when one node has a problem.
+
+10. Calico instead of kind's default network. The default one ignores NetworkPolicy, so the
+    rules that keep one customer away from another would do nothing. Calico enforces them.
+    On EKS the AWS network add-on does the same job, and the same policy files work there.
