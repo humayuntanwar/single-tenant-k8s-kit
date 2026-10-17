@@ -45,3 +45,14 @@
 10. Calico instead of kind's default network. The default one ignores NetworkPolicy, so the
     rules that keep one customer away from another would do nothing. Calico enforces them.
     On EKS the AWS network add-on does the same job, and the same policy files work there.
+
+
+## Kubernetes basics
+
+11. One namespace per customer. Each customer's things live in their own folder in the cluster,
+    so rules and limits can be set per customer.
+
+12. Two copies of the app (replicas: 2). If one pod or node dies, the other keeps serving.
+
+13. The Service is internal only (ClusterIP). Nothing is reachable from outside unless I
+    deliberately expose it, which is what a bank expects.
