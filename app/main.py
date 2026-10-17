@@ -27,7 +27,7 @@ def readyz():
     # Readiness: "can I take traffic?" Dependency checks would go here
     return {"status":"ready"}
 
-@app.get("/crash")
+@app.post("/crash")
 def crash():
     #drill only, off unless ALLOW_CRASH=true
     if not ALLOW_CRASH:

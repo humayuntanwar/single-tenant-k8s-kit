@@ -56,3 +56,6 @@
 
 13. The Service is internal only (ClusterIP). Nothing is reachable from outside unless I
     deliberately expose it, which is what a bank expects.
+
+   14. Separate liveness and readiness checks, tested by breaking readiness on purpose:
+       the broken pod stayed alive but got no traffic, and the old pods kept serving.
