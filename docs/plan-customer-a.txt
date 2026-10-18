@@ -1,0 +1,62 @@
+[1m  # module.customer_env.module.eks.data.aws_eks_addon_version.this["coredns"][0m will be read during apply
+[1m  # module.customer_env.module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"][0m will be read during apply
+[1m  # module.customer_env.module.eks.data.aws_eks_addon_version.this["kube-proxy"][0m will be read during apply
+[1m  # module.customer_env.module.eks.data.aws_eks_addon_version.this["vpc-cni"][0m will be read during apply
+[1m  # module.customer_env.module.eks.data.tls_certificate.this[0][0m will be read during apply
+[1m  # module.customer_env.module.eks.aws_cloudwatch_log_group.this[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_access_entry.this["cluster_creator"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_addon.before_compute["eks-pod-identity-agent"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_addon.before_compute["vpc-cni"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_addon.this["coredns"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_addon.this["kube-proxy"][0m will be created
+[1m  # module.customer_env.module.eks.aws_eks_cluster.this[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_iam_openid_connect_provider.oidc_provider[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_iam_policy.cluster_encryption[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_iam_role.this[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_iam_role_policy_attachment.cluster_encryption[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group.cluster[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group.node[0][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.cluster["ingress_nodes_443"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["egress_all"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_10251_webhook"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_443"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"][0m will be created
+[1m  # module.customer_env.module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"][0m will be created
+[1m  # module.customer_env.module.eks.time_sleep.this[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_default_network_acl.this[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_default_route_table.default[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_default_security_group.this[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_eip.nat[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_internet_gateway.this[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_nat_gateway.this[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route.private_nat_gateway[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route.public_internet_gateway[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table.private[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table.public[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table_association.private[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table_association.private[1][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table_association.public[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_route_table_association.public[1][0m will be created
+[1m  # module.customer_env.module.vpc.aws_subnet.private[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_subnet.private[1][0m will be created
+[1m  # module.customer_env.module.vpc.aws_subnet.public[0][0m will be created
+[1m  # module.customer_env.module.vpc.aws_subnet.public[1][0m will be created
+[1m  # module.customer_env.module.vpc.aws_vpc.this[0][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_eks_node_group.this[0][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_iam_role.this[0][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].aws_launch_template.this[0][0m will be created
+[1m  # module.customer_env.module.eks.module.kms.data.aws_iam_policy_document.this[0][0m will be read during apply
+[1m  # module.customer_env.module.eks.module.kms.aws_kms_alias.this["cluster"][0m will be created
+[1m  # module.customer_env.module.eks.module.kms.aws_kms_key.this[0][0m will be created
+[1m  # module.customer_env.module.eks.module.eks_managed_node_group["default"].module.user_data.null_resource.validate_cluster_service_cidr[0m will be created
