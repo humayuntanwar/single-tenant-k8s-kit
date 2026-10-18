@@ -1,0 +1,27 @@
+# a tiny pod with curl inside, used only to test the network from inside a namespace. 
+#sleep 3600 keeps it alive for an hour, so you can run commands in it with kubectl exec.
+# It follows the restricted rules and states its requests; otherwise the namespace would refuse it.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 100
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: curl
+      image: curlimages/curl:8.11.1
+      command: ["sleep", "3600"]
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi
+        limits:
+          memory: 32Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]

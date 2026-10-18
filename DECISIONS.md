@@ -56,6 +56,23 @@
 
 13. The Service is internal only (ClusterIP). Nothing is reachable from outside unless I
     deliberately expose it, which is what a bank expects.
-
-   14. Separate liveness and readiness checks, tested by breaking readiness on purpose:
+    
+14. Separate liveness and readiness checks, tested by breaking readiness on purpose:
        the broken pod stayed alive but got no traffic, and the old pods kept serving.
+
+## Isolation
+
+15. Namespace per customer is the first step, not the whole answer. On its own it
+    doesn't stop network traffic or bad pods, so I added three layers on top.
+
+16. Default-deny network rules, then allow only same-customer traffic and DNS.
+    Tested: customer-b timed out trying to reach customer-a.
+
+17. Pod Security set to "restricted" on every customer namespace. Tested: a root nginx
+    pod was refused. A one-letter typo in the label had silently switched it off,
+    which I only caught by testing.
+
+18. A quota per customer and a memory limit per pod. Tested: a pod over its limit was
+    OOMKilled and restarted, while the other pods kept serving.
+
+19. Secrets mounted as files, not environment variables, so they don't leak into logs.
