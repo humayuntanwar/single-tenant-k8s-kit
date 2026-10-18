@@ -1,0 +1,13 @@
+{{- if .Values.quota.enabled }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: tenant-quota
+  labels:
+    {{- include "tenant-api.labels" . | nindent 4 }}
+spec:
+  hard:
+    requests.cpu: {{ .Values.quota.cpu | quote }}
+    requests.memory: {{ .Values.quota.memory }}
+    pods: "10"
+{{- end }}

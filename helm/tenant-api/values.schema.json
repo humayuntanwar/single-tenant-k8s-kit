@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["tenantName", "image"],
+    "properties": {
+      "tenantName": { "type": "string", "minLength": 1 },
+      "image": {
+        "type": "object",
+        "required": ["repository", "tag"],
+        "properties": {
+          "repository": { "type": "string" },
+          "tag": { "type": "string", "not": { "const": "latest" } }
+        }
+      },
+      "replicas": { "type": "integer", "minimum": 1 }
+    }
+  }

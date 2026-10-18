@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tenant-api
+  labels:
+    {{- include "tenant-api.labels" . | nindent 4 }}
+data:
+  TENANT_NAME: {{ .Values.tenantName | quote }}
+  APP_VERSION: {{ .Values.image.tag | quote }}
+  ALLOW_CRASH: {{ .Values.allowCrash | quote }}

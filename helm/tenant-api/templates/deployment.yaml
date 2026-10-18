@@ -2,55 +2,52 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tenant-api
-  namespace: customer-a
+  labels:
+    {{- include "tenant-api.labels" . | nindent 4 }}
 spec:
-  replicas: 2 # one can die and traffic still flows
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: tenant-api
+      {{- include "tenant-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: tenant-api
+        {{- include "tenant-api.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
         seccompProfile:
-          type: RuntimeDefault #  blocks dangerous low-level Linux calls. The restricted level requires it.
+          type: RuntimeDefault
       containers:
         - name: api
-          image: tenant-api:0.1.1
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: tenant-api #loads every ConfigMap setting as an environment variable.
+                name: tenant-api
           volumeMounts:
             - name: secrets
-              mountPath: /etc/secrets #secret as a file , not an env var
+              mountPath: /etc/secrets
               readOnly: true
             - name: tmp
               mountPath: /tmp
           resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              memory: 128Mi
+            {{- toYaml .Values.resources | nindent 12}}
           livenessProbe:
             httpGet: {path: /healthz, port: 8080}
           readinessProbe:
             httpGet: {path: /readyz, port: 8080}
           securityContext:
-            allowPrivilegeEscalation: false #and dropping ALL capabilities mean no extra Linux powers at all.
-            readOnlyRootFilesystem: true #stops the container changing its own files, so an attacker can't drop a tool in.
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]
       volumes:
         - name: secrets
           secret:
             secretName: tenant-api
-        - name: tmp #as an emptyDir is a small writable scratch folder, wiped when the pod dies. Python needs one.
+        - name: tmp
           emptyDir: {}

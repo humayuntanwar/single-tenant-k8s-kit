@@ -1,0 +1,3 @@
+tenantName: customer-b
+apiKey: fake-key-b
+replicas: 3

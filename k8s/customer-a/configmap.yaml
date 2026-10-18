@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: tenant-api
-  namespace: customer-a
-data:
-  TENANT_NAME: customer-a
-  APP_VERSION: "0.1.1"
-  ALLOW_CRASH: "false"

@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: customer-a
-  labels:
-    pod-security.kubernetes.io/enforce: restricted #the same namespace, plus one label. The label switches on Kubernetes' built-in Pod Security check at its strictest level, restricted. Any pod that would run as root or could gain extra powers is refused before it starts.

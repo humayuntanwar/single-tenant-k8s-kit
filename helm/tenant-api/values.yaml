@@ -1,0 +1,19 @@
+tenantName: "" # must be set per customer; the scehma enforces it
+image:
+  repository: tenant-api
+  tag: "0.1.1"
+replicas: 2
+allowCrash: false
+apiKey: "change-me" # larning onlt; real secret come from a valut
+resources:
+  requests:
+   cpu: 50m
+   memory: 64Mi
+  limits:
+    memory: 128Mi
+quota:
+  enabled: true
+  cpu: "1"
+  memory: 1Gi
+networkPolicy:
+  enabled: true

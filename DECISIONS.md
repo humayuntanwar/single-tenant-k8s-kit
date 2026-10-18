@@ -75,4 +75,19 @@
 18. A quota per customer and a memory limit per pod. Tested: a pod over its limit was
     OOMKilled and restarted, while the other pods kept serving.
 
-19. Secrets mounted as files, not environment variables, so they don't leak into logs.
+19. Secrets mounted as files, not environment variables, so they don't leak into logs.\
+
+
+## Helm
+
+20. One chart for every customer, with a small values file each. Customers differ only in
+    settings, never in code. Scaling customer-b to 3 pods didn't touch customer-a.
+
+21. A values schema checks settings before anything is installed. Tested: an empty tenant
+    name and the "latest" tag were both refused.
+
+22. Helm keeps a history of every release, so rollback is one command. Tested: a broken
+    image went out as revision 2, and I rolled back to revision 1.
+
+23. Helm reports "deployed" even if the pods never start. In production I'd use --wait so
+    a failed rollout is reported as a failure, and roll back automatically.

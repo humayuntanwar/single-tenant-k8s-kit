@@ -1,38 +1,30 @@
-#three firewall rules, enforced by Calico. --- separates the three objects in one file.
-#1. default-deny-all: podSelector: {} means every pod in this namespace. Nothing gets in or out.
-#2. allow-same-namespace: pods in customer-a can talk to each other.
-#3. allow-dns: pods can reach the cluster's DNS on port 53, so names like tenant-api still work.
-#Result: customer-b can't reach customer-a, and the pods can't call out to the internet.
-
+{{- if .Values.networkPolicy.enabled}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-deny-all
-  namespace: customer-a
 spec:
   podSelector: {}
-  policyTypes: ["Ingress","Egress"]
+  policyTypes: ["Ingress", "Egress"]
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-same-namespace
-  namespace: customer-a
 spec:
   podSelector: {}
-  policyTypes: ["Ingress","Egress"]
+  policyTypes: ["Ingress", "Egress"]
   ingress:
     - from:
         - podSelector: {}
   egress:
     - to:
-        - podSelector: {}   
+        - podSelector: {}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-dns
-  namespace: customer-a
 spec:
   podSelector: {}
   policyTypes: ["Egress"]
@@ -44,5 +36,6 @@ spec:
       ports:
         - protocol: UDP
           port: 53
-        - protocol: UDP
+        - protocol: TCP
           port: 53
+{{- end }}
