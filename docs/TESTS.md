@@ -40,6 +40,20 @@ Every test I ran on purpose to prove the kit behaves the way I claim. All passed
 | 22 | `latest` tag refused | `... --set image.tag=latest` | Refused by the schema | ✅ "'not' failed" |
 | 23 | Scale one customer only | `replicas: 3` for customer-b, upgrade | customer-b 3, customer-a 2 | ✅ one pod added, none restarted |
 
+## Day 4: Terraform and AWS EKS
+
+| # | Test | Command | Expected | Result |
+|---|---|---|---|---|
+| 24 | Terraform code valid | `terraform validate` | Success | ✅ |
+| 25 | Plan before touching AWS | `terraform plan ... -out tfplan` | Only creates | ✅ 56 to add, 0 to change, 0 to destroy |
+| 26 | Cluster built | `terraform apply tfplan` | Apply complete | ✅ (after switching the node type, see troubleshooting #34) |
+| 27 | **Nodes are private** | `kubectl get nodes -o wide` | No external IPs | ✅ EXTERNAL-IP `<none>` on both nodes |
+| 28 | Nodes in two zones | Same command | One node per private subnet | ✅ 10.10.1.x and 10.10.24.x |
+| 29 | Same chart runs on EKS | `helm install ... --set image.repository=<ecr>` | 2 pods Running | ✅ 1/1, one pod on each node |
+| 30 | App answers from AWS | `kubectl port-forward` + `curl` | tenant customer-a | ✅ `{"tenant":"customer-a",...,"version":"0.1.1"}` |
+| 31 | Clean teardown | `terraform destroy` | Everything removed | ✅ 56 destroyed |
+| 32 | Nothing left running | `aws eks list-clusters`, `describe-nat-gateways` | Empty | ✅ `[]` for both; ECR repository deleted |
+
 ## What I'd add next
 - Automated versions of tests 11, 14 and 21, run in CI on every change.
 - Upgrades with `--wait`, so test 19 is reported as a failure instead of "deployed".

@@ -49,8 +49,21 @@ Check everything:
 2. Create an IAM user for yourself with an access key.
 3. Set a $20 budget alert.
 4. Run `aws configure` with region `eu-west-2` (London), then check with `aws sts get-caller-identity`.
+5. **On the AWS Free plan, only some instance types are allowed.** Check with
+   `aws ec2 describe-instance-types --region eu-west-2 --filters Name=free-tier-eligible,Values=true`.
+   This kit uses `t4g.small` (ARM) for that reason.
+6. Check a supported EKS version before applying:
+   `aws eks describe-cluster-versions --region eu-west-2`.
+7. Cost: about $1–2 if you destroy in the same session. Always finish with `terraform destroy`
+   and check that `aws eks list-clusters` and the NAT gateway list are empty.
 
 ## Local cluster
 
     kind create cluster --config kind/cluster.yaml
-    # then install Calico; the steps are in the README quick start
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.33.0/manifests/v3_projectcalico_org.yaml
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.33.0/manifests/tigera-operator.yaml
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.33.0/manifests/custom-resources.yaml
+    kubectl get pods -n calico-system -w     # wait for 1/1 Running (2-5 minutes), then Ctrl+C
+    kubectl get nodes                        # all Ready
+
+The Calico CRD file above is for Kubernetes 1.36 and later (kind 0.33 runs 1.37).

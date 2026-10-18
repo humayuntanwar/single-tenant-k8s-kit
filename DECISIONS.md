@@ -23,14 +23,14 @@
 
 
 
-   ## Container
+## Container
 
-   5. The container runs as a normal user (uid 10001), not root. If someone breaks in.
+5. The container runs as a normal user (uid 10001), not root. If someone breaks in, they can't do much. A bank's security review checks this first.
 
-   6. Two-stage build: one stage installs packages, the final image only gets the result.
+6. Two-stage build: one stage installs packages, the final image only gets the result.
       Smaller image, fewer things to patch.
 
-   7. Images get a version tag (0.1.0), never "latest". You always know exactly
+7. Images get a version tag (0.1.0), never "latest". You always know exactly
       which build is running for each customer.
 
 
@@ -75,7 +75,7 @@
 18. A quota per customer and a memory limit per pod. Tested: a pod over its limit was
     OOMKilled and restarted, while the other pods kept serving.
 
-19. Secrets mounted as files, not environment variables, so they don't leak into logs.\
+19. Secrets mounted as files, not environment variables, so they don't leak into logs.
 
 
 ## Helm
@@ -91,3 +91,22 @@
 
 23. Helm reports "deployed" even if the pods never start. In production I'd use --wait so
     a failed rollout is reported as a failure, and roll back automatically.
+
+## AWS
+
+24. One VPC and one EKS cluster per customer, from one Terraform module. A new customer is a new
+    small folder, not new code.
+
+25. Nodes only in private subnets, with no public IPs. Verified: EXTERNAL-IP was <none> on both nodes.
+
+26. Cluster API only reachable from one admin IP. A bank would go further and use a private-only endpoint.
+
+27. Graviton (ARM) nodes: cheaper, and they match the image built on my M1 Mac. t4g.small, because
+    the AWS Free plan blocks t4g.medium.
+
+28. Images in a private registry (ECR). Nodes can pull but not push.
+
+29. One NAT gateway to save cost. Production would use one per zone, so losing a zone doesn't cut
+    outbound traffic.
+
+30. Destroy after every test, and verify it: 56 resources destroyed, then empty cluster and NAT lists.

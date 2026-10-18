@@ -18,13 +18,13 @@ flowchart TB
                 pubA["Public subnet<br/>10.10.48.0/24"]
                 nat["NAT gateway + Elastic IP"]
                 privA["Private subnet<br/>10.10.0.0/20"]
-                nodeA["EKS node<br/>t4g.medium (Graviton)"]
+                nodeA["EKS node<br/>t4g.small (Graviton)"]
             end
 
             subgraph azB["Availability zone B"]
                 pubB["Public subnet<br/>10.10.49.0/24"]
                 privB["Private subnet<br/>10.10.16.0/20"]
-                nodeB["EKS node<br/>t4g.medium (Graviton)"]
+                nodeB["EKS node<br/>t4g.small (Graviton)"]
             end
 
             pubA --- nat
@@ -95,4 +95,7 @@ flowchart TB
 ## How it was checked
 
 - `terraform validate`: the code is correct.
-- `terraform plan`: 56 to add, 0 to change, 0 to destroy. The full list of what would be created is in `docs/plan-customer-a.txt`.
+- `terraform plan`: 56 to add, 0 to change, 0 to destroy. The list is in `docs/plan-customer-a.txt`.
+- **Deployed for real** on 18 October 2026: both nodes `Ready` with no external IPs, one in each zone; the Helm chart's two pods running, one per node; a live `curl` response from customer-a. See `docs/eks-proof.png`.
+- **Destroyed and verified:** `Destroy complete! Resources: 56 destroyed.`, then no EKS clusters and no NAT gateways, and the ECR repository deleted. See `docs/proof/`.
+- Nodes are `t4g.small` because the AWS Free plan blocks `t4g.medium` (see troubleshooting #34).

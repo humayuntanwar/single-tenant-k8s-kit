@@ -53,7 +53,7 @@ module "eks" {
   eks_managed_node_groups = {
     default = {
       ami_type       = "AL2023_ARM_64_STANDARD" #ARM (Graviton)
-      instance_types = ["t4g.medium"]
+      instance_types = ["t4g.small"]
       min_size       = 1
       max_size       = 3
       desired_size   = 2
